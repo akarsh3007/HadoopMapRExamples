@@ -2,6 +2,25 @@
 public class NetflixDataParser {
 
 	private String year;
+	private String movieName;
+	private String rating;
+	
+	public void parse(String value){
+		String[] array = value.split(",");
+		year = array[4];
+		movieName = array[0];
+		rating = array[5];
+		if(year.length()!=4){
+			for(int i=5;i<array.length;i++){
+				if(array[i].length()==4){
+					year = array[i];
+					rating = array[i+1];
+					break;
+				}
+			}
+		}
+		
+	}
 
 	public String getYear() {
 		return year;
@@ -10,30 +29,43 @@ public class NetflixDataParser {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	
+	public String getMovieName() {
+		return movieName;
+	}
 
-	public boolean NetflixDataParse(String line) {
-		String[] data = line.split(",");
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
 
-		if (data[4] != null || !data[4].isEmpty()) {
+	public String getRating() {
+		return rating;
+	}
 
-			if (data[4].length() == 4) {
-				if (!data[4].equalsIgnoreCase("release year")) {
-					setYear(data[4]);
-					return true;
-				}
-			}
-			else
-			{
-				for (int i = 4; i < data.length; i++) {
-					
-					if(data[i].length() == 4)
-					{
-						setYear(data[i]);
-						return true;
-					}
-				}
-			}
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	boolean isHeader(){
+		if(year.equals("release year")){
+			return true;
 		}
 		return false;
 	}
+	
+	boolean isYearValid(){
+		if(year.equals("") || year==null){
+			return false;
+		}
+		return true;
+	}
+	
+	boolean isRatingValid(){
+		if(rating.equals("NA") || rating==null){
+			return false;
+		}
+		return true;
+	}
+		
+	
 }

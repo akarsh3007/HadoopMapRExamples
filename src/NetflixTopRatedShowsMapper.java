@@ -1,20 +1,25 @@
 import java.io.IOException;
-
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class NetFlixDataMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class NetflixTopRatedShowsMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 	NetflixDataParser parser = new NetflixDataParser();
 
+	@Override
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
 		String line = value.toString();
+		StringBuilder sb = new StringBuilder();
 
 		parser.parse(line);
-		context.write(new Text(parser.getYear()), new IntWritable(1));
+		sb.append(parser.getMovieName());
+		sb.append(";");
+		sb.append(parser.getRating());
+		if (parser.isRatingValid() && !parser.isHeader()) {
+
+			context.write(new Text("1"), new Text(sb.toString()));
+		}
 
 	}
 
