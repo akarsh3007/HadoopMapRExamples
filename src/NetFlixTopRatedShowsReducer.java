@@ -1,7 +1,4 @@
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import com.google.common.collect.Ordering;
