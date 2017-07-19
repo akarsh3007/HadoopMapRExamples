@@ -1,0 +1,15 @@
+digraph G {
+  1 [ label="[tail]" shape="Mrecord" ];
+  2 [ label="{Every : 63B89|('wc')|[Count[decl:[\{1\}:'count' | Long]]]}" shape="Mrecord" ];
+  3 [ label="{[head]|hash: 543E9D12|3.2.1|Hadoop MR:2.7.3:}" shape="Mrecord" ];
+  4 [ label="{Hfs : F5F07|['TextDelimited[['doc_id', 'text']]']|['cascading/copyfile/input']}" shape="Mrecord" ];
+  5 [ label="{Hfs : DECF0|['TextDelimited[['token', 'count']]']|['cascading/wordcount/output']}" shape="Mrecord" ];
+  6 [ label="{Each : DB114|('token')|[RegexSplitGenerator[decl:[\{1\}:'token']]|[args:1]]}" shape="Mrecord" ];
+  7 [ label="{GroupBy : CEBA1|('wc')|[by:['token']]}" shape="Mrecord" ];
+  2 -> 5 [ label="[0]\n[{2}:'token', 'count']\n[{1}:'token']" ];
+  4 -> 6 [ label="[0]\n[{2}:'doc_id', 'text']\n[{2}:'doc_id', 'text']" ];
+  7 -> 2 [ label="[0]\nwc[{1}:'token']\n[{1}:'token']" ];
+  3 -> 4 [ label="[0]" ];
+  5 -> 1 [ label="[0]\n[{2}:'token', 'count']\n[{2}:'token', 'count']" ];
+  6 -> 7 [ label="[0]\n[{1}:'token']\n[{1}:'token']" ];
+}
